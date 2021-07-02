@@ -4,6 +4,6 @@ node{
     }
     
     stage ('Run BMI application'){
-    sh 'nohup /usr/bin/python3 bmi.py >> output.log &'
+    bat 'python bmi.py'
     }
 }
