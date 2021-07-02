@@ -4,8 +4,7 @@ node{
     }
     
     stage ('Run BMI application'){
-        sh 'python3 bmi.py'
-        sleep(10)
-        exit
+        sh 'python3 bmi.py \&'
+        
     }
 }
