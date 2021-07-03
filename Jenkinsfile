@@ -4,7 +4,7 @@ node{
     }
     
     stage ('Run BMI application'){
-        sh 'python3 bmi.py &'
+        sh 'python3 bmi.py'
         
     }
 }
