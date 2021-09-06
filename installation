@@ -1,0 +1,187 @@
+Instalations:-
+
+Links:-
+
+Jenkins :- http://18.191.192.117:8080/ (ajitav/themra)
+Github  :- 
+
+############################################################
+JENKINS SETUP:-
+############################################################
+
+> Login to AWS EC2 and create a instance with Amazon Linux 2 AMI (HVM), SSD Volume Type t2.micro(free tire).
+> Github link :- https://github.com/ValaxyTech/DevOpsDemos/blob/master/Jenkins/Installation.MD
+Steps:-
+1. yum install java-1.8*
+2. java -version
+3. Update in .bash_profile
+   #JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.x86_64
+   PATH=$PATH:$JAVA_HOME
+4. Install jenkins
+   yum -y install wget
+   wget -O /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+   rpm --import https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+   yum -y install jenkins
+   
+5. # Start jenkins service
+    systemctl start jenkins
+	
+6. Jenkins URL:- http://YOUR-SERVER-PUBLIC-IP:8080
+
+http://52.66.252.203:8080/
+
+
+
+
+
+7. Configure Jenkins
+   The default Username is admin
+   Grab the default password
+   Password Location:/var/lib/jenkins/secrets/initialAdminPassword
+   Skip Plugin Installation; We can do it later
+   Change admin password
+        Admin > Configure > Password
+   Configure java path
+        Manage Jenkins > Global Tool Configuration > JDK
+   Create another admin user id
+   
+
+############################################################
+MAVEN SETUP:-
+############################################################
+
+Maven Installation:-
+
+1. mkdir /opt/maven
+   cd /opt/maven
+
+2. # downloading maven version 3.6.0
+   wget https://mirrors.estointernet.in/apache/maven/maven-3/3.6.3/binaries/apache-maven-3.6.3-bin.tar.gz
+   tar –xvzf apache-maven-3.6.3-bin.tar.gz
+
+3.  vi .bashrc
+    export PATH=/opt/maven/apache-maven-3.6.3/bin:$PATHx
+	
+4. Logout and Login in a new session
+   mvn -version
+   
+
+
+Setup maven on jenkins console
+Install maven plugin without restart
+
+Manage Jenkins > Jenkins Plugins > available > Maven Invoker
+Configure java path
+
+Manage Jenkins > Global Tool Configuration > Maven
+
+############################################################
+GITHUP SETUP:-
+############################################################
+1. yum install git -y
+
+
+Setup Git on jenkins console
+Install git plugin without restart
+
+Manage Jenkins > Jenkins Plugins > available > github
+Configure git path
+
+Manage Jenkins > Global Tool Configuration > git
+
+** In new jenkins git plugins are auto updated
+
+##########################################################
+NEXUS Setup
+###########################################################
+
+Prerequisite:-
+1. Install java
+   yum install java-1.8.0-openjdk -y
+   
+2. cd /opt
+
+
+##########################################################
+NAGIOS CONFIGURATION:-
+###########################################################
+
+youtube link - https://www.youtube.com/watch?v=6P9pm0c35HY
+
+http://3.17.178.140/nagios/
+user-nagiosadmin/pwd-themra
+
+installation link -- https://www.itzgeek.com/how-tos/linux/centos-how-tos/monitor-centos-7-rhel-7-using-nagios-4-0-7.html 
+Adding hosts -- https://www.itzgeek.com/how-tos/linux/centos-how-tos/monitor-remote-linux-system-with-nagios-3.html
+
+> Nagios installation to be done on master server.All other nodes need to install npre plugins.
+ http://3.17.206.124/nagios/
+
+###########################################################
+DOCKER SETUP
+###########################################################
+https://hub.docker.com/choose-plan?ref=signup
+ajitav12/themra123
+
+Install Docker on AMI instance:-
+1. Update the installed packages and package cache on your instance.
+   # yum update -y
+2. Install the most recent Docker Community Edition package.
+   # yum install docker -y
+3. Start the Docker service.
+   # service docker start
+4. Check docker status
+   # service docker status
+5. Check Docker version/info
+    docker --version
+	docker info
+	
+	
+
+
+######################################################################
+ANSIBLE SETUP
+######################################################################
+
+1. yum update -y
+2. wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+3. yum install epel-release-latest-7.noarch.rpm
+4. yum install git python python-devel python-pip openssl ansible -y
+5. ansible --version
+6. Make sure that python should be installed in host machines.
+7. create a user in all servers.
+   
+   useradd ansadmin
+   passwd ansadmin
+   
+8. visudo / add ansadmin user to give him root access
+   
+   root    ALL=(ALL)       ALL
+   ansadmin ALL=(ALL)       ALL
+   
+9. create passwordless authentication in all servers.
+   
+   vi /etc/ssh/sshd_config
+   uncomment PasswordAuthentication(yes) and PermitRootLogin
+   systemctl restart sshd
+   
+10. Generate ssh key in Master and copy into all host servers
+    In Master login as ansadmin user:-
+	
+	su - ansadmin
+	ssh-keygen
+	ssh-copy-id <target-server-private-ip>
+	
+11. Add hosts under /etc/ansible/hosts and test connection
+    ansible all -m ping
+	
+ansible all -m ping
+ansible-playbook Helloworld.yml --syatax-check
+ansible-playbook Helloworld.yml
+  
+  
+#################################################################################
+TERRAFORM SETUP
+#################################################################################
+
+download terraform from google and extract the exe file and add the path in the enviournment variable path.
